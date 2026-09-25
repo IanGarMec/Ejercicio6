@@ -22,35 +22,28 @@ class MainViewModel : ViewModel() {
         private set
     var isRunning by mutableStateOf(false)
         private set
-    private var job: Job? = null
+    private var oneTwoCount: Job? = null
 
-    fun fetchData() {
-        viewModelScope.launch {
-            for (i in 1..5) {
-                delay(1000)
-                countTime = i
-            }
+
+    private suspend fun contador1() {
+        for (i in 1..countN) {
+            delay(1000)
+            countTime = i
         }
-        viewModelScope.launch {
-            delay(5000)
-            resultState = "Respuesta obtenida de la Web"
+    }
+
+    private suspend fun contador2() {
+        for (i in 1..countN) {
+            delay(1000)
+            countTime2 = i
         }
     }
 
     fun fetchDataTimer() {
-        job = viewModelScope.launch {
+        oneTwoCount = viewModelScope.launch {
             isRunning = true
-
-            for (i in 1..countN) {
-                delay(1000)
-                countTime = i
-            }
-
-            for (i in 1..countN) {
-                delay(1000)
-                countTime2 = i
-            }
-
+            contador1()
+            contador2()
             resultState = "Respuesta obtenida de la Web"
             countN++
             isRunning = false
@@ -58,13 +51,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun cancelarProceso() {
-        job?.cancel()
+        oneTwoCount?.cancel()
         isRunning = false
         resultState = "Proceso cancelado"
     }
 
     fun limpiarContadores() {
-        job?.cancel()
+        oneTwoCount?.cancel()
         resultState = ""
         countN = 2
         countTime = 0

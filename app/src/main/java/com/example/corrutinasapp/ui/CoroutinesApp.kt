@@ -26,10 +26,10 @@ import com.example.corrutinasapp.viewmodel.MainViewModel
 @Composable
 fun CoroutinesApp(viewModel: MainViewModel, modifier: Modifier = Modifier) {
     CoroutinesAppContent(
-        viewModel.resultState,
+        resultState = viewModel.resultState,
         onFetchData = { viewModel.fetchDataTimer() },
-        onCancel = { viewModel.cancelarProceso() },
         reset = { viewModel.limpiarContadores() },
+        onCancel = { viewModel.cancelarProceso() },
         timer = viewModel.countTime,
         timer2 = viewModel.countTime2,
         isRunning = viewModel.isRunning,
@@ -41,8 +41,8 @@ fun CoroutinesApp(viewModel: MainViewModel, modifier: Modifier = Modifier) {
 fun CoroutinesAppContent(
     resultState: String,
     onFetchData: () -> Unit,
-    onCancel: () -> Unit,
     reset: () -> Unit,
+    onCancel: () -> Unit,
     timer: Int,
     timer2: Int,
     isRunning: Boolean,
@@ -53,7 +53,7 @@ fun CoroutinesAppContent(
     }
 
     Column(
-        modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -68,12 +68,12 @@ fun CoroutinesAppContent(
         ) {
             Text(stringResource(R.string.cambio_de_color))
         }
-        Spacer(modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         Text("Contador 1: $timer [s]")
         Text("Contador 2: $timer2 [s]")
-        Spacer(modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Text(resultState)
-        Spacer(modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Button(
             onClick = {
@@ -83,15 +83,14 @@ fun CoroutinesAppContent(
         ) {
             Text(stringResource(R.string.realizar_consulta))
         }
-        Spacer(modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Button(
-            onClick = onCancel,
-            colors = ButtonDefaults.buttonColors(Color.Red)
+            onClick = onCancel
         ) {
-            Text("Cancelar")
+            Text("Cancelar Proceso")
         }
-        Spacer(modifier.height(1.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = reset,
@@ -109,8 +108,8 @@ fun CoroutinesAppPreview() {
         CoroutinesAppContent(
             resultState = "Respuesta de la Web",
             onFetchData = {},
-            onCancel = {},
             reset = {},
+            onCancel = {},
             timer = 4,
             timer2 = 2,
             isRunning = true
